@@ -11,8 +11,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Ground
+  - Climbable
   - 
   - 
   - 
@@ -40,4 +40,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2001038477
+    locked: 0
+  - name: Water
+    uniqueID: 842462267
+    locked: 0
+  - name: Climbable
+    uniqueID: 3904277665
+    locked: 0
+  - name: Platforms
+    uniqueID: 199659319
+    locked: 0
+  - name: Characters
+    uniqueID: 253892641
     locked: 0
