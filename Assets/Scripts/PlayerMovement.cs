@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
   [SerializeField]
-  private float runSpeed = 5f;
+  private float runSpeed = 7f;
 
   [SerializeField]
   private float jumpSpeed = 20f;
@@ -18,14 +18,17 @@ public class PlayerMovement : MonoBehaviour
   Rigidbody2D playerRigidbody;
   private Animator playerAnimator;
 
-  CapsuleCollider2D playerCollider;
-
+  CapsuleCollider2D playerBodyCollider;
+  BoxCollider2D playerFeetCollider;
+  private float defaultGravity;
 
   private void Awake()
   {
     playerRigidbody = GetComponent<Rigidbody2D>();
     playerAnimator = GetComponent<Animator>();
-    playerCollider = GetComponent<CapsuleCollider2D>();
+    playerBodyCollider = GetComponent<CapsuleCollider2D>();
+    playerFeetCollider = GetComponent<BoxCollider2D>();
+    defaultGravity = playerRigidbody.gravityScale;
   }
 
   // Start is called before the first frame update
@@ -38,17 +41,25 @@ public class PlayerMovement : MonoBehaviour
   void Update()
   {
     bool playerHasHorizontalSpeed = MathF.Abs(playerRigidbody.velocity.x) > Mathf.Epsilon;
+    bool playerHasVerticleSpeed = MathF.Abs(playerRigidbody.velocity.y) > Mathf.Epsilon;
     Run(playerHasHorizontalSpeed);
     FlipSprite(playerHasHorizontalSpeed);
-    ClimbLadder();
+    ClimbLadder(playerHasVerticleSpeed);
   }
 
-  private void ClimbLadder()
+  private void ClimbLadder(bool playerHasVerticleSpeed)
   {
-    if (playerCollider.IsTouchingLayers(LayerMask.GetMask("Climbable")))
+    if (playerBodyCollider.IsTouchingLayers(LayerMask.GetMask("Climbable")))
     {
+      playerRigidbody.gravityScale = 0f;
       Vector2 playerVelocity = new Vector2(playerRigidbody.velocity.x, moveInput.y * climbSpeed);
       playerRigidbody.velocity = playerVelocity;
+      playerAnimator.SetBool("isClimbing", playerHasVerticleSpeed);
+    }
+    else
+    {
+      playerAnimator.SetBool("isClimbing", false);
+      playerRigidbody.gravityScale = defaultGravity;
     }
   }
 
@@ -74,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
 
   void OnJump(InputValue value)
   {
-    if (!playerCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))) return;
+    if (!playerFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"))) return;
     if (value.isPressed)
     {
       playerRigidbody.velocity += new Vector2(0, jumpSpeed);
