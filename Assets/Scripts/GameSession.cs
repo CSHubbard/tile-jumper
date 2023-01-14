@@ -7,17 +7,14 @@ using UnityEngine.SceneManagement;
 
 public class GameSession : MonoBehaviour
 {
-  [SerializeField]
-  private int playerLives = 3;
+  [SerializeField] private int playerLives = 3;
+  [SerializeField] private int playerScore = 0;
 
-  [SerializeField]
-  TextMeshProUGUI livesText;
+  [SerializeField] TextMeshProUGUI livesText;
 
-  [SerializeField]
-  TextMeshProUGUI scoreText;
+  [SerializeField] TextMeshProUGUI scoreText;
 
-  [SerializeField]
-  private float respawnDelay = 1.5f;
+  [SerializeField] private float respawnDelay = 1.5f;
 
   void Awake()
   {
@@ -32,11 +29,18 @@ public class GameSession : MonoBehaviour
     }
   }
 
+  void Start()
+  {
+    livesText.text = playerLives.ToString();
+    scoreText.text = playerScore.ToString();
+  }
+
   public void processPlayerDeath()
   {
     if (playerLives > 1)
     {
       TakeLife();
+      livesText.text = playerLives.ToString();
     }
     else
     {
@@ -46,6 +50,7 @@ public class GameSession : MonoBehaviour
 
   private void ResetGameSession()
   {
+    FindObjectOfType<ScenePersist>().ResetScenePersist();
     SceneManager.LoadScene(0);
     Destroy(gameObject);
   }
@@ -54,5 +59,11 @@ public class GameSession : MonoBehaviour
   {
     playerLives--;
     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+  }
+
+  public void processScoreIncrease(int amount)
+  {
+    playerScore += amount;
+    scoreText.text = playerScore.ToString();
   }
 }
