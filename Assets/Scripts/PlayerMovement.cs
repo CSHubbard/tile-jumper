@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
 public class PlayerMovement : MonoBehaviour
 {
   [SerializeField]
@@ -33,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
   private Transform playerGun;
   private float defaultGravity;
   private bool isAlive = true;
+  private float respawnDelay = 1.5f;
 
   private void Awake()
   {
@@ -122,6 +125,12 @@ public class PlayerMovement : MonoBehaviour
       isAlive = false;
       playerAnimator.SetTrigger("Dying");
       playerRigidbody.velocity = deathFling;
+      Invoke("ReloadScene", respawnDelay);
     }
+  }
+
+  private void ReloadScene()
+  {
+    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
   }
 }
