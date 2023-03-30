@@ -9354,6 +9354,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1953293831340719347, guid: be9931f6195d3e04786904fb75069684, type: 3}
+      propertyPath: respawnDelay
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3830415999068656364, guid: be9931f6195d3e04786904fb75069684, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -9511,11 +9515,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5703714476363289798, guid: ee389d33de8c98b41b1e3230b66c0ac1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.5986786
+      value: -7.9458065
       objectReference: {fileID: 0}
     - target: {fileID: 5703714476363289798, guid: ee389d33de8c98b41b1e3230b66c0ac1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.34782
+      value: -3.3484404
       objectReference: {fileID: 0}
     - target: {fileID: 5703714477036669777, guid: ee389d33de8c98b41b1e3230b66c0ac1, type: 3}
       propertyPath: m_AnimatedTarget

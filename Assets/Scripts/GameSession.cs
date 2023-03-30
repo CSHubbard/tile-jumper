@@ -39,24 +39,26 @@ public class GameSession : MonoBehaviour
   {
     if (playerLives > 1)
     {
-      TakeLife();
+      StartCoroutine(TakeLife());
       livesText.text = playerLives.ToString();
     }
     else
     {
-      ResetGameSession();
+      StartCoroutine(ResetGameSession());
     }
   }
 
-  private void ResetGameSession()
+  private IEnumerator ResetGameSession()
   {
+    yield return new WaitForSeconds(respawnDelay);
     FindObjectOfType<ScenePersist>().ResetScenePersist();
     SceneManager.LoadScene(0);
     Destroy(gameObject);
   }
 
-  private void TakeLife()
+  private IEnumerator TakeLife()
   {
+    yield return new WaitForSeconds(respawnDelay);
     playerLives--;
     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
   }
@@ -66,4 +68,5 @@ public class GameSession : MonoBehaviour
     playerScore += amount;
     scoreText.text = playerScore.ToString();
   }
+
 }
