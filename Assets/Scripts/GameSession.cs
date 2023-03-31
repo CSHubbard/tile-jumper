@@ -40,7 +40,6 @@ public class GameSession : MonoBehaviour
     if (playerLives > 1)
     {
       StartCoroutine(TakeLife());
-      livesText.text = playerLives.ToString();
     }
     else
     {
@@ -60,6 +59,7 @@ public class GameSession : MonoBehaviour
   {
     yield return new WaitForSeconds(respawnDelay);
     playerLives--;
+    livesText.text = playerLives.ToString();
     SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
   }
 
